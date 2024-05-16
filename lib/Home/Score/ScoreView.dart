@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
 class ScoreView extends StatefulWidget {
-  const ScoreView({super.key});
+  final int player1Score;
+  final int player2Score;
+
+  const ScoreView({
+    super.key,
+    required this.player1Score,
+    required this.player2Score,
+  });
 
   @override
   State<ScoreView> createState() => _ScoreViewState();
@@ -23,7 +30,7 @@ class _ScoreViewState extends State<ScoreView> {
           ),
           SizedBox(height: 16),
           Text(
-              "Player 1: 000",
+              "Player 1: ${widget.player1Score}",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500
@@ -31,7 +38,7 @@ class _ScoreViewState extends State<ScoreView> {
           ),
           SizedBox(height: 8),
           Text(
-              "Player 2: 000",
+              "Player 2: ${widget.player2Score}",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500

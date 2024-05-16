@@ -30,11 +30,16 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16
                 ),
-                child: ScoreView(),
+                child: ScoreView(
+                  player1Score: 100,
+                  player2Score: 0,
+                ),
               ),
             ),
             Center(
-              child: RestartButton(),
+              child: RestartButton(onRestart: () {
+                print("Restart");
+              }),
             ),
             SizedBox(height: 50)
           ],

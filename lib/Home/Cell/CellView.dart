@@ -8,6 +8,8 @@ class CellView extends StatefulWidget {
 }
 
 class _CellViewState extends State<CellView> {
+  bool isPlayer1 = true;
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -22,10 +24,11 @@ class _CellViewState extends State<CellView> {
             ),
             child: Center(
               child: Text(
-                "X",
+                isPlayer1 ? "X" : "O",
                 style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
+                    color: isPlayer1 ? Colors.white : Colors.black
                 ),
               ),
             ),
