@@ -17,18 +17,26 @@ class _CellViewState extends State<CellView> {
         aspectRatio: 1,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-              color: Colors.blue,
-            ),
-            child: Center(
-              child: Text(
-                isPlayer1 ? "X" : "O",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: isPlayer1 ? Colors.white : Colors.black
+          child: InkWell(
+              onTap: () {
+                // Handle tap event
+                setState(() {
+                  isPlayer1 = !isPlayer1;
+                });
+              },
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16)),
+                color: Colors.blue,
+              ),
+              child: Center(
+                child: Text(
+                  isPlayer1 ? "X" : "O",
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: isPlayer1 ? Colors.white : Colors.black
+                  ),
                 ),
               ),
             ),
