@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 
 class CellView extends StatefulWidget {
-  const CellView({super.key});
+  final bool gameStarted;
+  final bool isPlayer1;
+  final VoidCallback pressTileAction;
+
+  const CellView({
+    super.key,
+    required this.gameStarted,
+    required this.isPlayer1,
+    required this.pressTileAction
+  });
 
   @override
   State<CellView> createState() => _CellViewState();
 }
 
 class _CellViewState extends State<CellView> {
-  bool isPlayer1 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +29,7 @@ class _CellViewState extends State<CellView> {
               onTap: () {
                 // Handle tap event
                 setState(() {
-                  isPlayer1 = !isPlayer1;
+                  widget.pressTileAction;
                 });
               },
             child: Container(
@@ -30,14 +38,16 @@ class _CellViewState extends State<CellView> {
                 color: Colors.blue,
               ),
               child: Center(
-                child: Text(
-                  isPlayer1 ? "X" : "O",
-                  style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: isPlayer1 ? Colors.white : Colors.black
-                  ),
-                ),
+                child: widget.gameStarted
+                    ? Text(
+                    widget.isPlayer1 ? "X" : "O",
+                    style: TextStyle(
+                    fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: widget.isPlayer1 ? Colors.white : Colors.black
+                      ),
+                    )
+                    : Text("")
               ),
             ),
           ),
