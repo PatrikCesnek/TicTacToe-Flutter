@@ -1,101 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:tic_tac_toe/Home/CellGroup/cellGroupView.dart';
-// import 'package:tic_tac_toe/Home/Score/ScoreView.dart';
-// import 'package:tic_tac_toe/Home/SubViews/RestartButton.dart';
-// import 'package:tic_tac_toe/Extensions/BoolToggleExtension.dart';
-//
-// class HomeView extends StatefulWidget {
-//   const HomeView({super.key});
-//
-//   @override
-//   State<HomeView> createState() => _HomeViewState();
-// }
-//
-// class _HomeViewState extends State<HomeView> {
-//   int player1Score = 0;
-//   int player2Score = 0;
-//   bool isPlayer1 = true;
-//   bool gameStarted = false;
-//
-//   @override
-//   void initState() {
-//     super.initState();
-//     // Run after the first frame is rendered
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       setState(() {
-//         gameStarted = true;
-//       });
-//     });
-//   }
-//
-//   void pressTileAction() {
-//     print(isPlayer1);
-//     setState(() {
-//       gameStarted = true;
-//       isPlayer1 = isPlayer1.toggle();
-//     });
-//     print('Action performed!');
-//     print(isPlayer1);
-//   }
-//
-//   void restartGame() {
-//     setState(() {
-//       gameStarted = false;
-//     });
-//     print('Game restarted!');
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         centerTitle: true,
-//         title: Text("TicTacToe"),
-//       ),
-//       body: Center(
-//         child: Column(
-//           children: [
-//             Padding(
-//               padding: const EdgeInsets.all(16.0),
-//               child: Expanded(
-//                 child: CellGroupView(
-//                   gameStarted: gameStarted,
-//                   isPlayer1: isPlayer1,
-//                   pressTileAction: pressTileAction,
-//                 ),
-//               ),
-//             ),
-//             Expanded(
-//               child: Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal: 16),
-//                 child: ScoreView(
-//                   player1Score: player1Score,
-//                   player2Score: player2Score,
-//                 ),
-//               ),
-//             ),
-//             Center(
-//               child: RestartButton(onRestart: restartGame),
-//             ),
-//             SizedBox(height: 50),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-//
-// void main() {
-//   runApp(MaterialApp(
-//     home: HomeView(),
-//   ));
-// }
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tic_tac_toe/Home/SubViews/RestartButton.dart';
 import 'package:tic_tac_toe/ViewModel/TicTacToeViewModel.dart';
-
 import '../Model/Model.dart';
 
 class TicTacToeApp extends StatelessWidget {
@@ -144,9 +50,27 @@ class TicTacToeScreen extends StatelessWidget {
                           actions: [
                             TextButton(
                               onPressed: () {
+                                viewModel.restartGame();
                                 Navigator.of(context).pop();
                               },
-                              child: Text("OK"),
+                              child: Text("Restart"),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else if (viewModel.isDraw) {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text("It's a draw!"),
+                          content: Text("The game is a draw."),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                viewModel.restartGame();
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("Restart"),
                             ),
                           ],
                         ),
@@ -167,8 +91,8 @@ class TicTacToeScreen extends StatelessWidget {
                             ? "X"
                             : "O",
                         style: TextStyle(
-                            fontSize: 60,
-                            fontWeight: FontWeight.bold
+                          fontSize: 60,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
@@ -178,7 +102,7 @@ class TicTacToeScreen extends StatelessWidget {
             ),
           ),
           RestartButton(onRestart: () {
-            print("Restart");
+            viewModel.restartGame();
           }),
         ],
       ),

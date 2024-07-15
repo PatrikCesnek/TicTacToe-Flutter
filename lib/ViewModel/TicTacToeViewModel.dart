@@ -4,9 +4,11 @@ import '../Model/Model.dart';
 class TicTacToeViewModel with ChangeNotifier {
   TicTacToe _game = TicTacToe();
   Player _currentPlayer = Player.x;
+  bool _isDraw = false;
 
   List<List<Player>> get board => _game.board;
   Player get currentPlayer => _currentPlayer;
+  bool get isDraw => _isDraw;
 
   void makeMove(int row, int column) {
     _game.makeMove(row, column, _currentPlayer);
@@ -16,6 +18,16 @@ class TicTacToeViewModel with ChangeNotifier {
       _currentPlayer = Player.x;
     }
     notifyListeners();
+
+    Player winner = checkWinner();
+    if (winner != Player.none) {
+      // Winner found, do something like showing an alert
+    } else if (isBoardFull()) {
+      // It's a draw
+      _isDraw = true;
+      notifyListeners();
+      // Show draw alert
+    }
   }
 
   Player checkWinner() {
@@ -51,5 +63,23 @@ class TicTacToeViewModel with ChangeNotifier {
     }
 
     return Player.none;
+  }
+
+  bool isBoardFull() {
+    for (int row = 0; row < 3; row++) {
+      for (int col = 0; col < 3; col++) {
+        if (board[row][col] == Player.none) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  void restartGame() {
+    _game = TicTacToe();
+    _currentPlayer = Player.x;
+    _isDraw = false;
+    notifyListeners();
   }
 }
